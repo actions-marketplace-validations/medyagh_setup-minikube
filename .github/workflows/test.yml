@@ -93,10 +93,10 @@ jobs:
             echo "::group::minikube addons list"
             minikube addons list || true
             echo "::endgroup::"
-            echo "::group::ingress namespace pods"
+            echo "::group::Ingress namespace pods"
             kubectl get pods -n ingress-nginx -o wide || true
             echo "::endgroup::"
-            echo "::group::minikube image list"
+            echo "::group::minikube image ls"
             minikube image ls || true
             echo "::endgroup::"
             echo "::group::minikube logs"
