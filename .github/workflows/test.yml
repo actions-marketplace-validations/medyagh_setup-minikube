@@ -88,10 +88,10 @@ jobs:
       - name: Verify ingress addon enabled
         if: matrix.scenario == 'ingress'
         run: |
-          if ! minikube addons list | grep 'ingress ' | grep enabled; then
+          if ! MINIKUBE_IN_STYLE=false minikube addons list | grep 'ingress ' | grep enabled; then
             echo "::error::Ingress addon check failed, collecting diagnostics"
             echo "::group::minikube addons list"
-            minikube addons list || true
+            MINIKUBE_IN_STYLE=false minikube addons list || true
             echo "::endgroup::"
             echo "::group::Ingress namespace pods"
             kubectl get pods -n ingress-nginx -o wide || true
