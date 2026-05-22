@@ -51,8 +51,7 @@ jobs:
       - name: install vfkit and tools needed
         shell: bash
         run: |
-          brew update 
-          brew install vfkit
+          HOMEBREW_NO_AUTO_UPDATE=1 brew install vfkit
           curl -fsSL https://github.com/minikube-machine/vmnet-helper/releases/latest/download/install.sh | sudo VMNET_INTERACTIVE=0 bash
           fw=/usr/libexec/ApplicationFirewall/socketfilterfw
           sudo $fw --remove /usr/libexec/bootpd
