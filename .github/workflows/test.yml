@@ -88,7 +88,22 @@ jobs:
       - name: Verify ingress addon enabled
         if: matrix.scenario == 'ingress'
         run: |
-          minikube addons list | grep 'ingress ' | grep enabled
+          if ! minikube addons list | grep 'ingress ' | grep enabled; then
+            echo "::error::Ingress addon check failed, collecting diagnostics"
+            echo "::group::minikube addons list"
+            minikube addons list || true
+            echo "::endgroup::"
+            echo "::group::Ingress namespace pods"
+            kubectl get pods -n ingress-nginx -o wide || true
+            echo "::endgroup::"
+            echo "::group::minikube image ls"
+            minikube image ls || true
+            echo "::endgroup::"
+            echo "::group::minikube logs"
+            minikube logs || true
+            echo "::endgroup::"
+            exit 1
+          fi
       - name: Verify max pods extra config
         if: matrix.scenario == 'extra-options'
         run: |
