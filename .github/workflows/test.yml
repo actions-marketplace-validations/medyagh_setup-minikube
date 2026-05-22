@@ -88,7 +88,7 @@ jobs:
       - name: Verify ingress addon enabled
         if: matrix.scenario == 'ingress'
         run: |
-          if ! minikube addons list | grep 'ingress ' | grep enabled; then
+          if ! minikube addons list | grep 'ingress' | grep -v 'ingress-dns' | grep enabled; then
             echo "::error::Ingress addon check failed, collecting diagnostics"
             echo "::group::minikube addons list"
             minikube addons list || true
